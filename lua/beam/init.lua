@@ -1,13 +1,8 @@
 local M = {}
 
-local function can_open(str, pattern)
-  return vim.fn.match(str, pattern) == 0 and true or false
-end
-
 local function can_open_url(url)
-  local website_x =
-  [[\v^((https?|ftp)://)?(www\.)?[a-zA-Z0-9_-]+\.[a-zA-Z]{2,}([:/][0-9]+)?(\/[a-zA-Z0-9_\/#.-]*)*(\?[a-zA-Z0-9_=&%+-]*)?$]]
-  return can_open(url, website_x)
+  local pattern = "https?://(([%w_.~!*:@&+$/?%%#-]-)(%w[-.%w]*%.)(%w+)(:?)(%d*)(/?)([%w_.~!*:@&+$/?%%#=-]*))"
+  return string.match(url, pattern) ~= nil
 end
 
 function M.open_url(url)
@@ -27,8 +22,13 @@ function M.open_url(url)
 end
 
 local function can_open_file(path)
-  local file_x = "^(%a%:?.-)\\?(.+)$"
-  return can_open(path, file_x)
+  local file = io.open(path, "r")
+  if file then
+    io.close(file)
+    return true
+  else
+    return false
+  end
 end
 
 function M.open_file(path)
@@ -51,20 +51,19 @@ function M.scan_then_open()
 end
 
 local function get_visual_selection()
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
+  local s_start = vim.fn.getpos("v")
+  local s_end = vim.fn.getpos(".")
+  local n_lines = math.abs(s_end[2] - s_start[2]) + 1
+  local lines = vim.api.nvim_buf_get_lines(0, s_start[2] - 1, s_end[2], false)
+  lines[1] = string.sub(lines[1], s_start[3], -1)
 
-  local line_start, col_start = start_pos[2], start_pos[3]
-  local line_end, col_end = end_pos[2], end_pos[3]
-
-  local lines = vim.fn.getline(line_start, line_end)
-
-  if #lines > 0 then
-    lines[1] = lines[1]:sub(col_start)
-    lines[#lines] = lines[#lines]:sub(1, col_end)
+  if n_lines == 1 then
+    lines[n_lines] = string.sub(lines[n_lines], 1, s_end[3] - s_start[3] + 1)
+  else
+    lines[n_lines] = string.sub(lines[n_lines], 1, s_end[3])
   end
 
-  return table.concat(lines, "\n")
+  return table.concat(lines, '\n')
 end
 
 function M.open_visual_selection()
