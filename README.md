@@ -1,9 +1,11 @@
+```text
 ██████╗ ███████╗ █████╗ ███╗   ███╗
 ██╔══██╗██╔════╝██╔══██╗████╗ ████║
 ██████╔╝█████╗  ███████║██╔████╔██║
 ██╔══██╗██╔══╝  ██╔══██║██║╚██╔╝██║
 ██████╔╝███████╗██║  ██║██║ ╚═╝ ██║
 ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝
+ ```
 
 Opening Links and Files from String Outputs
 
@@ -19,7 +21,7 @@ Opening Links and Files from String Outputs
 
 Install with lazy
 
- ```lua
+```lua
  return {
   "HueGreywell/beam.nvim",
   config = function()
@@ -30,3 +32,4 @@ Install with lazy
     vim.keymap.set("v", ?, beam.open_visual_selection)
   end
 }
+```
