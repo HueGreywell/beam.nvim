@@ -19,9 +19,7 @@ Opening Links and Files from String Outputs
 
 • `beam.open_file(str)` do you even need this?
 
-Install with your favorite plugin manager
-
-Lazy example:
+Installation Example Using Lazy
 
 ```lua
  return {
