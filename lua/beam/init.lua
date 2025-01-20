@@ -1,6 +1,6 @@
 local M = {}
 
-local function can_open_url(url)
+function M.can_open_url(url)
   local pattern = "https?://(([%w_.~!*:@&+$/?%%#-]-)(%w[-.%w]*%.)(%w+)(:?)(%d*)(/?)([%w_.~!*:@&+$/?%%#=-]*))"
   return string.match(url, pattern) ~= nil
 end
@@ -21,8 +21,17 @@ function M.open_url(url)
   end
 end
 
-local function can_open_file(path)
-  local file = io.open(path, "r")
+--- returns file_path, line, column
+--- /path/example:2:5
+local function extract_path_and_line(path)
+  return path:match("^(.-):?(%d*):?(%d*)$")
+end
+
+function M.can_open_file(path)
+  local file_path, _, _ = extract_path_and_line(path)
+
+  local file = io.open(file_path, "r")
+
   if file then
     io.close(file)
     return true
@@ -32,16 +41,22 @@ local function can_open_file(path)
 end
 
 function M.open_file(path)
-  vim.cmd('e ' .. path)
+  local file_path, line, _ = extract_path_and_line(path)
+
+  vim.cmd('e ' .. file_path)
+
+  if (line ~= nil and #line > 0) then
+    vim.api.nvim_win_set_cursor(0, { tonumber(line), 0 })
+  end
 end
 
 function M.open(str)
-  if can_open_url(str) then
+  if M.can_open_url(str) then
     M.open_url(str)
-  elseif can_open_file(str) then
+  elseif M.can_open_file(str) then
     M.open_file(str)
   else
-    vim.print("Failed to beam" .. str)
+    vim.print("Failed to beam " .. str)
   end
 end
 
@@ -70,5 +85,7 @@ function M.open_visual_selection()
   local selected_text = get_visual_selection()
   M.open(selected_text)
 end
+
+M.open("C:/Users/dutin/dev/hue/beam.nvim/lua/beam/test.txt")
 
 return M
