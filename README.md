@@ -11,37 +11,37 @@
 
 ## Available Functions:
 
-- **`scan_then_open()`**  
-  Retrieves the word under the cursor.  
-  Checks if it is a URL or a file path, and opens it.
+**`scan_then_open()`**  
+Retrieves the word under the cursor.  
+Checks if it is a URL or a file path, and opens it.
 
-- **`open_visual_selection()`**  
-  Retrieves the visually selected text.  
-  Checks if it is a URL or a file path, and opens it.
+**`open_visual_selection()`**  
+Retrieves the visually selected text.  
+Checks if it is a URL or a file path, and opens it.
 
-- **`save_path(path)`**  
-  Saves the given path so it can be opened later.
+**`save_path(path)`**  
+Saves the given path so it can be opened later.
 
-- **`save_visual_path()`**  
-  Saves the currently selected text as a path for later use.
+**`save_visual_path()`**  
+Saves the currently selected text as a path for later use.
 
-- **`open_saved_path()`**  
-  Opens the saved path, if available, and deletes it after opening.
+**`open_saved_path()`**  
+Opens the saved path, if available, and deletes it after opening.
 
-- **`open(str)`**  
-  Checks if the input `str` is a URL or a file path and opens it.
+**`open(str)`**  
+Checks if the input `str` is a URL or a file path and opens it.
 
-- **`open_url(url)`**  
-  Directly opens a specified URL.
+**`open_url(url)`**  
+Directly opens a specified URL.
 
-- **`can_open_file(path)`**  
-  Returns `true` if the given path is a valid and accessible file.
+**`can_open_file(path)`**  
+Returns `true` if the given path is a valid and accessible file.
 
-- **`can_open_url(url)`**  
-  Returns `true` if the given URL is valid and accessible.
+**`can_open_url(url)`**  
+Returns `true` if the given URL is valid and accessible.
 
-- **`open_file(str)`**  
-  Do you need this?
+**`open_file(str)`**  
+Do you need this?
 
 ## Allowed File Patterns:
 
