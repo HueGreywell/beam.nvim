@@ -48,6 +48,10 @@ Do you need this?
 The following file pattern will move the cursor as well:  
 `/file/path/example:2:2`
 
+## Configuration:
+
+- **`setup(opts)`**  
+  - `opts.command`: This option overwrites the default command used when opening a URL.
 
 Installation Example Using Lazy
 

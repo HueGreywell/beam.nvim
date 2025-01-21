@@ -2,6 +2,12 @@ local M = {}
 
 M.saved_file_path = nil
 
+local command = nil
+
+function M.setup(opts)
+  command = opts.command
+end
+
 local function log(message)
   vim.notify(message, vim.log.levels.INFO)
 end
@@ -12,6 +18,11 @@ function M.can_open_url(url)
 end
 
 function M.open_url(url)
+  if command ~= nil then
+    os.execute(command .. ' ' .. url)
+    return
+  end
+
   local os_type = package.config:sub(1, 1)
 
   local is_windows = os_type == '\\'
@@ -19,11 +30,11 @@ function M.open_url(url)
   local is_mac = os_type == '/' and vim.fn.has("mac") == 1
 
   if is_windows then
-    os.execute('start ' .. url)
+    os.execute('start' .. ' ' .. url)
   elseif is_mac then
-    os.execute('open ' .. url)
+    os.execute('open' .. ' ' .. url)
   else
-    os.execute('xdg-open ' .. url)
+    os.execute('xdg-open' .. ' ' .. url)
   end
 end
 
