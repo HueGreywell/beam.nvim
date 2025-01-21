@@ -7,21 +7,46 @@
 ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝
  ```
 
-Opening Links and Files from String Outputs 
+# Opening Links and Files from String Outputs
 
-• `scan_then_open()` gets the word under the cursor, checks if it's a URL or file path, and opens it.  
+## Available Functions:
 
-• `open_visual_selection()` retrieves the visual selection, checks if it's a URL or file path, and opens it.
+- **`scan_then_open()`**  
+  Retrieves the word under the cursor.  
+  Checks if it is a URL or a file path, and opens it.
 
-• `beam.open(str)` checks if `str` is a URL or file path and opens it.
+- **`open_visual_selection()`**  
+  Retrieves the visually selected text.  
+  Checks if it is a URL or a file path, and opens it.
 
-• `beam.open_url(url)` opens url 
+- **`save_path(path)`**  
+  Saves the given path so it can be opened later.
 
-• `can_open_file(path)` returns true if path can be opened
+- **`save_visual_path()`**  
+  Saves the currently selected text as a path for later use.
 
-• `can_open_url(url)` returns true if url can be opened 
+- **`open_saved_path()`**  
+  Opens the saved path, if available, and deletes it after opening.
 
-• `beam.open_file(str)` do you even need this?
+- **`open(str)`**  
+  Checks if the input `str` is a URL or a file path and opens it.
+
+- **`open_url(url)`**  
+  Directly opens a specified URL.
+
+- **`can_open_file(path)`**  
+  Returns `true` if the given path is a valid and accessible file.
+
+- **`can_open_url(url)`**  
+  Returns `true` if the given URL is valid and accessible.
+
+- **`open_file(str)`**  
+  Do you need this?
+
+## Allowed File Patterns:
+
+The following file pattern will move the cursor as well:  
+`/file/path/example:2:2`
 
 
 Installation Example Using Lazy

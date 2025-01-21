@@ -1,5 +1,11 @@
 local M = {}
 
+M.saved_file_path = nil
+
+local function log(message)
+  vim.notify(message, vim.log.levels.INFO)
+end
+
 function M.can_open_url(url)
   local pattern = "https?://(([%w_.~!*:@&+$/?%%#-]-)(%w[-.%w]*%.)(%w+)(:?)(%d*)(/?)([%w_.~!*:@&+$/?%%#=-]*))"
   return string.match(url, pattern) ~= nil
@@ -56,7 +62,7 @@ function M.open(str)
   elseif M.can_open_file(str) then
     M.open_file(str)
   else
-    vim.print("Failed to beam " .. str)
+    log("Failed to beam " .. str)
   end
 end
 
@@ -86,6 +92,39 @@ function M.open_visual_selection()
   M.open(selected_text)
 end
 
-M.open("C:/Users/dutin/dev/hue/beam.nvim/lua/beam/test.txt")
+function M.open_()
+  local selected_text = get_visual_selection()
+  M.open(selected_text)
+end
+
+function M.open_saved_path()
+  if M.saved_file_path == nil then
+    log("There is no saved path")
+    return
+  end
+
+  M.open(M.saved_file_path)
+  M.saved_file_path = nil
+end
+
+function M.save_visual_path()
+  local path = get_visual_selection()
+  if M.can_open_file(path) then
+    M.saved_file_path = path
+    return
+  end
+
+  log("Can't save: " .. path)
+end
+
+function M.save_path()
+  local path = vim.fn.expand('<cWORD>')
+  if M.can_open_file(path) then
+    M.saved_file_path = path
+    return
+  end
+
+  log("Can't save: " .. path)
+end
 
 return M
